@@ -1,0 +1,42 @@
+// 1.
+
+enum Tea: String {
+    case green = "зелёный"
+    case black = "чёрный"
+    case fruit = "фруктовый"
+}
+
+let teaCost: [Tea: Double] = [.green: 2.0, .black: 1.0, .fruit: 3.0]
+let customersLine: [Tea] = [.black, .black, .fruit, .green, .fruit, .black, .green]
+
+func task1() {
+    for (customerNum, teaKind) in customersLine.enumerated() {
+        print("покупатель № \(customerNum + 1) хочет купить \(teaKind.rawValue) чай за \(teaCost[teaKind]!) рублей")
+    }
+}
+
+// 2.
+
+func task2() {
+    let srcArray: [Int?] = [-4, 5, 10, nil, 4, nil, 25, 0, nil, 16, 75, -20, -7, 15, 0, nil]
+    let dstArray: [Int] = srcArray.compactMap { $0 }.filter { $0 != 0 && $0 != 4 }.sorted(by: <)
+
+    print(dstArray)
+}
+
+// 3.
+
+func task3(num: Int) -> [Int] {
+    var res = [1]
+
+    if num > 1 {
+        for i in 0..<num {
+            res.append(res[i] * 2)
+        }
+    }
+    return res
+}
+
+task1()
+task2()
+print(task3(num: 16))
