@@ -1,0 +1,65 @@
+// 1
+
+
+protocol MenuProtocol {}
+
+
+struct Pizza: MenuProtocol {
+    enum PizzaKind: String {
+        case Pepperoni = "Пепперони"
+        case ChetyreSyra = "4 сыра"
+        case Barbeku = "Барбекю"
+        case Diablo = "Дьябло"
+
+        func getPizzaName() -> String { rawValue }
+    }
+
+    enum Additions: String {
+        case Tomatoes = "помидоры"
+        case Sausage = "колбаса"
+        case Pepper = "перец"
+        case Cheese = "сыр"
+
+        func getAdditionName() -> String { rawValue }
+    }
+
+    mutating func addAddition(addition: Additions) {
+        additions.append(addition)
+    }
+
+    var pizzaKind: PizzaKind
+    var additions: [Additions] = []
+    var isTestoTonkoe: Bool
+}
+
+
+struct Potato: MenuProtocol {
+    var cost: Double[get]
+    var size: Int[get]
+}
+
+class Pizzeria {
+  
+
+
+    private var menu: [MenuProtocol]
+
+    init(menu: [MenuProtocol]) {
+        self.menu = menu
+    }
+
+    public var description: String {
+        var res = "Список всех блюд в пиццерии:"
+
+        for (num, item) in menu.enumerated() {
+        
+        }
+        return res
+    }
+
+    // 2
+   
+    func addItem(item: MenuProtocol) {
+        menu.append(item)
+    }
+}
