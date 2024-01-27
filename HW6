@@ -1,0 +1,110 @@
+// 1.
+
+struct Employee {
+    // возможные должности
+    enum Position: String {
+        case Teller = "кассир"
+        case Cook = "повар"
+
+        func getPosition() -> String { rawValue }
+    }
+
+    var name: String
+    var salary: Double
+    var position: Position
+}
+
+// 2.
+
+class Table {
+    let numOfSeats: Int
+
+
+    weak var pizzeria: Pizzeria
+
+    init(numOfSeats: Int, pizzeria: Pizzeria) {
+        self.numOfSeats = numOfSeats
+        self.pizzeria = pizzeria
+    }
+
+    public func guestsAvailable(numOfGusts: Int) -> Bool { numOfSeats <= numOfGusts }
+}
+
+struct Pizza {
+    enum PizzaKind: String {
+        case Pepperoni = "Пепперони"
+        case ChetyreSyra = "4 сыра"
+        case Barbeku = "Барбекю"
+        case Diablo = "Дьябло"
+
+        func getPizzaName() -> String { rawValue }
+    }
+
+    enum Additions: String {
+        case Tomatoes = "помидоры"
+        case Sausage = "колбаса"
+        case Pepper = "перец"
+        case Cheese = "сыр"
+
+        func getAdditionName() -> String { rawValue }
+    }
+
+    mutating func addAddition(addition: Additions) {
+        additions.append(addition)
+    }
+
+    var pizzaKind: PizzaKind
+    var additions: [Additions] = []
+    var isTestoTonkoe: Bool
+}
+
+class Pizzeria {
+    private var pizzas: [Pizza]
+
+ 
+    private var employees: [Employee]
+
+
+    private var tables: [Table] = []
+
+    init(pizzas: [Pizza], employees: [Employee]) {
+        self.pizzas = pizzas
+        self.employees = employees
+
+   
+        tables = [Table(numOfSeats: 2, pizzeria: self),
+                  Table(numOfSeats: 4, pizzeria: self),
+                  Table(numOfSeats: 3, pizzeria: self)]
+    }
+
+    public var description: String {
+        var res = "Список всех пиц в пиццерии:"
+
+      
+        for (num, pizza) in pizzas.enumerated() {
+            res += "\n" + String(num + 1) + ". " + pizza.pizzaKind.getPizzaName()
+
+            if pizza.isTestoTonkoe {
+                res += ", тонкое тесто"
+            } else {
+                res += ", толстое тесто"
+            }
+
+            if pizza.additions.isEmpty {
+                res += ", стандартная"
+            } else {
+                res += ", с дополнениями:"
+
+                for addition in pizza.additions {
+                    res += "\n\t" + addition.getAdditionName()
+                }
+            }
+        }
+        return res
+    }
+
+
+    func addPizza(pizza: Pizza) {
+        pizzas.append(pizza)
+    }
+}
